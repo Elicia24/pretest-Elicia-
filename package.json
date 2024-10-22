@@ -1,7 +1,8 @@
 {
   "name": "password-generator",
   "version": "1.0.0",
-  "description": "",
+  "description": "In this assignment, you will create a simple password generator using HTML, CSS, and JavaScript (DOM manipulation). The password will allow users to specify the length of the password and whether to include:\r - Uppercase letters\r - Lowercase letter\r - Numbers\r - special characters",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "mocha --require @babel/register --reporter mocha-junit-reporter test/**/*.js" 
