@@ -1,53 +1,24 @@
-function generatePassword() {
-    const length = document.getElementById("length").value;
-    const includeUppercase = document.getElementById("includeUppercase").checked;
-    const includeLowercase = document.getElementById("includeLowercase").checked;
-    const includeNumbers = document.getElementById("includeNumbers").checked;
-    const includeSymbols = document.getElementById("includeSymbols").checked;
+export const generatePassword = (length, options) => {
+    const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const lowercase = "abcdefghijklmnopqrstuvwxyz";
+    const numbers = "0123456789";
+    const specialChars = "!@#$%^&*()";
 
-    const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
-    const numberChars = "0123456789";
-    const symbolChars = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+    let characterSet = '';
+    if (options.includeUppercase) characterSet += uppercase;
+    if (options.includeLowercase) characterSet += lowercase;
+    if (options.includeNumbers) characterSet += numbers;
+    if (options.includeSpecialChars) characterSet += specialChars;
 
-    let charPool = "";
-    if (includeUppercase) charPool += uppercaseChars;
-    if (includeLowercase) charPool += lowercaseChars;
-    if (includeNumbers) charPool += numberChars;
-    if (includeSymbols) charPool += symbolChars;
-
-    if (charPool === "") {
-        alert("Pilih salah satu.");
-        return;
+    if (characterSet === '') {
+        throw new Error('At least one character type must be selected.');
     }
 
-    if(length < 8){
-        alert("Masukkan minimal 8");
-        return;
-    }
-
-    let password = "";
+    let password = '';
     for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * charPool.length);
-        password += charPool[randomIndex];
+        const randomIndex = Math.floor(Math.random() * characterSet.length);
+        password += characterSet[randomIndex];
     }
 
-    document.getElementById("password").value = password;
-    document.getElementById("passwordOutput").textContent = password;
-}
-
-
-// Copy to Clipboard functionality
-document.getElementById('copyBtn').addEventListener('click', () => {
-    const passwordOutput = document.getElementById('password').value;
-    // alert(passwordOutput);
-    if (passwordOutput) {
-        navigator.clipboard.writeText(passwordOutput).then(() => {
-            alert('Password copied to clipboard!');
-        }).catch(err => {
-            console.error('Could not copy text: ', err);
-        });
-    } else {
-        alert('No password to copy!');
-    }
-});
+    return password;
+};
